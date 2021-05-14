@@ -1,0 +1,1179 @@
+swagger: '2.0'
+info:
+  version: Beta
+  title: API InboxDelivery
+  contact: {}
+  description: 'API de comunicação com o Inbox Delivery <br> <h2>ATENÇÃO! Todas as requisições precisam do parâmetro token enviados no Header.</h2><h2>Todas as fotos enviadas para o sistema, devem ser enviadas no formado Base64 sem o MimeType (data:image/png;base64,).</h2><h2>Qualquer dúvida relacionada a API pode ser resolvida via e-mail.<h2>'
+  x-server-configuration:
+    default-environment: production
+    default-server: Server 1
+    environments: []
+    parameters: []
+  x-image-uri: ''
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+
+  '/emitentes/configuracoes':
+    put:
+      summary: Atualizar Configurações
+      tags:
+        - Emitentes > Configurações
+      operationId: AtualizarConfigurações
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: Body
+          in: body
+          required: true
+          description: ''
+          schema:
+            $ref: '#/definitions/AtualizarConfiguracoesRequest'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  '/emitentes/formas_pagamento':
+    get:
+      summary: Listar todas disponíveis
+      tags:
+        - Emitentes > Formas de pagamento
+      operationId: Listartodasdisponíveis
+      deprecated: false
+      produces:
+        - application/json
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/ResponseFormasPagamentoDisponives'
+    post:
+      summary: Adicionar forma
+      tags:
+        - Emitentes > Formas de pagamento
+      operationId: Adicionarforma
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: Body
+          in: body
+          required: true
+          x-example:
+            id_forma: 1
+          description: ''
+          schema:
+            $ref: '#/definitions/AdicionarformaRequest'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/ResponseAdicionarFormaPagamento'
+    delete:
+      summary: Remover forma
+      tags:
+        - Emitentes > Formas de pagamento
+      operationId: Removerforma
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: Body
+          in: body
+          required: true
+          x-example:
+            id_forma: 4
+          description: ''
+          schema:
+            $ref: '#/definitions/RemoverformaRequest'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/ResponseRemoverFormaPagamento'
+  '/emitentes/':
+    put:
+      summary: Atualizar Emitente
+      tags:
+        - Emitentes
+      operationId: AtualizarEmitente
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: Body
+          in: body
+          required: true
+          description: 'Função responsável por atualizar os dados do emitente'
+          schema:
+            $ref: '#/definitions/AtualizarEmitenteRequest'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          
+  '/categorias':
+    get:
+      summary: Listar Categorias
+      tags:
+        - Categorias
+      operationId: ListarCategorias
+      deprecated: false
+      produces:
+        - application/json
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+    post:
+      summary: Adicionar Categoria
+      tags:
+        - Categorias
+      operationId: AdicionarCategoria
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: Body
+          in: body
+          required: true
+          x-example:
+            nome: Tubérculos
+          description: ''
+          schema:
+            $ref: '#/definitions/AdicionarCategoriaRequest'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  '/categorias/{id}':
+    get:
+      summary: Obter Categoria
+      tags:
+        - Categorias
+      operationId: ObterCategoria
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: ''
+          headers: {}
+    delete:
+      summary: Apagar Categoria
+      tags:
+        - Categorias
+      operationId: ApagarCategoria
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: ''
+          headers: {}
+    put:
+      summary: Atualizar Categoria
+      tags:
+        - Categorias
+      operationId: AtualizarCategoria
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          
+        - name: Body
+          in: body
+          required: true
+          x-example:
+            nome: Verduras
+          description: ''
+          schema:
+            $ref: '#/definitions/AtualizarCategoriaRequest'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  '/categorias/{id}/foto':
+    put:
+      summary: Atualizar Foto
+      tags:
+        - Categorias
+      operationId: AtualizarFoto
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          
+        - name: Body
+          in: body
+          required: true
+          description: ''
+          schema:
+            $ref: '#/definitions/AtualizarFotoRequest'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+
+  '/produtos':
+    get:
+      summary: Listar Produtos
+      tags:
+        - Produtos
+      operationId: ListarProdutos
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: limit
+          in: query
+          required: true
+          type: integer
+          format: int32
+          x-example: 600
+          description: ''
+        - name: page
+          in: query
+          required: true
+          type: integer
+          format: int32
+          x-example: 1
+          description: ''
+        - name: show_not_visible
+          in: query
+          required: true
+          type: boolean
+          x-example: true
+          description: ''
+      responses:
+        '200':
+          description: ''
+          headers: {}
+    post:
+      summary: Adicionar Produto
+      tags:
+        - Produtos
+      operationId: AdicionarProduto
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: Body
+          in: body
+          required: true
+          description: ''
+          schema:
+            $ref: '#/definitions/AdicionarProdutoRequest'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  '/produtos/{codigo}':
+    get:
+      summary: Obter Produto
+      tags:
+        - Produtos
+      operationId: ObterProduto
+      deprecated: false
+      produces:
+        - application/json
+      parameters: 
+        - name: codigo
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: ''
+          headers: {}
+
+    put:
+      summary: Atualizar Produto
+      tags:
+        - Produtos
+      operationId: AtualizarProduto
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: codigo
+          in: path
+          required: true
+          type: string
+        - name: Body
+          in: body
+          required: true
+          description: ''
+          schema:
+            $ref: '#/definitions/AtualizarProdutoRequest'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+    delete:
+      summary: Apagar Produto
+      tags:
+        - Produtos
+      operationId: ApagarProduto
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: codigo
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  '/produtos/{codigo}/foto':
+    put:
+      summary: Atualizar Foto
+      tags:
+        - Produtos
+      operationId: PutAtualizarFoto
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: codigo
+          in: path
+          required: true
+          type: string
+        - name: Body
+          in: body
+          required: true
+          description: ''
+          schema:
+            $ref: '#/definitions/AtualizarFotoRequest'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+
+  '/pedidos/{id}/status/confirmado':
+    get:
+      summary: Confirmar pedido
+      tags:
+        - Pedidos > Status
+      operationId: Confirmado
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  '/pedidos/{id}/status/conferido':
+    get:
+      summary: Conferido
+      tags:
+        - Pedidos > Status
+      operationId: Conferido
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  '/pedidos/{id}/status/saiu_para_entrega':
+    get:
+      summary: Saiu para Entrega
+      tags:
+        - Pedidos > Status
+      operationId: SaiuparaEntrega
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  '/pedidos/{id}/status/finalizado':
+    get:
+      summary: Finalizado
+      tags:
+        - Pedidos > Status
+      operationId: Finalizado
+      deprecated: false
+      produces:
+        - application/json
+      parameters: 
+        - name: id
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  
+  '/pedidos':
+    get:
+      summary: Listar Pedido
+      tags:
+        - Pedidos
+      operationId: ListarPedido
+      deprecated: false
+      produces:
+        - application/json
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  '/pedidos/{id}':
+    get:
+      summary: Obter Pedido
+      tags:
+        - Pedidos
+      operationId: ObterPedido
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+        - name: mostrar_itens_excluidos
+          in: query
+          required: true
+          type: integer
+          format: int
+          x-example: 1
+          description: ''
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          
+    put:
+      summary: Atualizar Pedido
+      tags:
+        - Pedidos
+      operationId: AtualizarPedido
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+        - name: Body
+          in: body
+          required: true
+          description: ''
+          schema:
+            $ref: '#/definitions/AtualizarPedidoRequest'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+ 
+  '/notificacoes':
+    post:
+      summary: Adicionar notificação
+      tags:
+        - Notificações
+      operationId: Adicionarnotificação
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: Body
+          in: body
+          required: true
+          description: ''
+          schema:
+            $ref: '#/definitions/Adicionarnotifica%C3%A7%C3%A3oRequest'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+
+definitions:
+  AtualizarConfiguracoesRequest:
+    title: AtualizarConfiguracoesRequest
+    example:
+      valor_pedido_minimo: 40
+      notific_status_recebido_title: Pedido recebido
+      notific_status_recebido_body: 'Recebemos seu pedido nº {{numero}}, agradecemos sua compra.'
+      notific_status_confirmado_title: Pedido confirmado
+      notific_status_confirmado_body: 'Confirmamos o recebimento do seu pedido nº {{numero}}.'
+      notific_status_conferido_title: Pedido conferido
+      notific_status_conferido_body: 'Conferimos o seu pedido nº {{numero}}, acesse o aplicativo para verificar possíveis alterações.'
+      notific_status_saiupentrega_title: Pedido saiu para a entrega
+      notific_status_saiupentrega_body: 'Coisa Linda!! Seu pedido nº {{numero}} acabou de sair para a entrega, pode esperar ansioso no local escolhido!'
+      notific_status_finalizado_title: Pedido finalizado
+      notific_status_finalizado_body: 'Seu pedido nº {{numero}} foi finalizado, muito obrigado por sua compra, até a próxima!'
+      whitelabel_precos_somente_logados: false
+      whitelabel_bloquear_registro: false
+      whitelabel_bloquear_login_social: false
+      pag_usar_entrega: true
+      pag_usar_online: false
+      entrega_habilitada: true
+      entrega_tipo: 'DT'
+    type: object
+    properties:
+      valor_pedido_minimo:
+        type: integer
+        format: int32
+      notific_status_recebido_title:
+        type: string
+      notific_status_recebido_body:
+        type: string
+      notific_status_confirmado_title:
+        type: string
+      notific_status_confirmado_body:
+        type: string
+      notific_status_conferido_title:
+        type: string
+      notific_status_conferido_body:
+        type: string
+      notific_status_saiupentrega_title:
+        type: string
+      notific_status_saiupentrega_body:
+        type: string
+      notific_status_finalizado_title:
+        type: string
+      notific_status_finalizado_body:
+        type: string
+      whitelabel_precos_somente_logados:
+        type: boolean
+      whitelabel_bloquear_registro:
+        type: boolean
+      whitelabel_bloquear_login_social:
+        type: boolean
+      pag_usar_entrega:
+        type: boolean
+      pag_usar_online:
+        type: boolean
+      entrega_habilitada:
+        type: boolean
+      entrega_tipo:
+        type: string
+    required:
+      - valor_pedido_minimo
+      - whitelabel_precos_somente_logados
+      - whitelabel_bloquear_registro
+      - whitelabel_bloquear_login_social
+      - pag_usar_entrega
+      - pag_usar_online
+      - entrega_habilitada
+      - entrega_tipo
+  AdicionarformaRequest:
+    title: AdicionarformaRequest
+    example:
+      id_forma: 1
+    type: object
+    properties:
+      id_forma:
+        type: integer
+        format: int32
+    required:
+      - id_forma
+  RemoverformaRequest:
+    title: RemoverformaRequest
+    example:
+      id_forma: 1
+    type: object
+    properties:
+      id_forma:
+        type: integer
+        format: int32
+    required:
+      - id_forma
+  AtualizarEmitenteRequest:
+    title: AtualizarEmitenteRequest
+    example:
+      razao_social: LINVIX DESENVOLVIMENTO DE COMPUTADORES LTDA
+      fantasia: Linvix Sistemas
+      cpf_cnpj: 00.00.000/0000=00
+      foto: ''
+      email: ''
+      telefone: (48) 3245-7372
+      celular: ''
+      fax: ''
+      logradouro: Rua João Marcolino Costa
+      municipio: Santo Amaro da Imperatriz
+      numero: '161'
+      bairro: Centro
+      cep: 88140-000
+      uf: SC
+    type: object
+    properties:
+      razao_social:
+        type: string
+      fantasia:
+        type: string
+      cpf_cnpj:
+        type: string
+      foto:
+        type: string
+      email:
+        type: string
+      telefone:
+        type: string
+      celular:
+        type: string
+      fax:
+        type: string
+      logradouro:
+        type: string
+      municipio:
+        type: string
+      numero:
+        type: string
+      bairro:
+        type: string
+      cep:
+        type: string
+      uf:
+        type: string
+    required:
+      - razao_social
+      - fantasia
+      - cpf_cnpj
+      - foto
+      - email
+      - telefone
+      - celular
+      - fax
+      - logradouro
+      - municipio
+      - numero
+      - bairro
+      - cep
+      - uf
+  AdicionarCategoriaRequest:
+    title: AdicionarCategoriaRequest
+    example:
+      nome: Tubérculos
+    type: object
+    properties:
+      nome:
+        type: string
+    required:
+      - nome
+  AtualizarCategoriaRequest:
+    title: AtualizarCategoriaRequest
+    example:
+      nome: Verduras
+    type: object
+    properties:
+      nome:
+        type: string
+    required:
+      - nome
+  AtualizarFotoRequest:
+    title: AtualizarFotoRequest
+    type: object
+    properties:
+      foto:
+        type: string
+    required:
+      - foto
+  AdicionarProdutoRequest:
+    title: AdicionarProdutoRequest
+    example:
+      codigo: "000000"
+      barras: ''
+      descricao: Rúcula
+      obs: Peso aprox. 200g/un
+      und: G
+      categoria: Verduras
+      qtd_minima: 200
+      preco_custo: 2
+      preco_venda: 3.5
+      disponive: true
+    type: object
+    properties:
+      codigo:
+        type: string
+      barras:
+        type: string
+      descricao:
+        type: string
+      obs:
+        type: string
+      und:
+        type: string
+      categoria:
+        type: string
+      qtd_minima:
+        type: integer
+        format: int32
+      preco_custo:
+        type: integer
+        format: int32
+      preco_venda:
+        type: number
+        format: double
+      disponivel:
+        type: number
+        format: boolean
+    required:
+      - codigo
+      - descricao
+      - und
+      - qtd_minima
+      - preco_custo
+      - preco_venda
+      - disponivel
+  AtualizarProdutoRequest:
+    title: AtualizarProdutoRequest
+    example:
+      codigo: "000000"
+      barras: ''
+      descricao: Alface crespa
+      obs: Peso aprox. 1kg/un
+      und: UN
+      foto: ''
+      categoria: Verduras
+      qtd_minima: 1
+      preco_custo: 1.1
+      preco_venda: 1.5
+      disponivel: false
+    type: object
+    properties:
+      codigo:
+        type: string
+      barras:
+        type: string
+      descricao:
+        type: string
+      obs:
+        type: string
+      und:
+        type: string
+      foto:
+        type: string
+      categoria:
+        type: string
+      qtd_minima:
+        type: integer
+        format: int32
+      preco_custo:
+        type: number
+        format: double
+      preco_venda:
+        type: number
+        format: double
+      disponivel:
+        type: boolean
+    required:
+      - codigo
+      - descricao
+      - und
+      - qtd_minima
+      - preco_custo
+      - preco_venda
+      - disponivel
+  Iten:
+    title: Iten
+    example:
+      codigo: 1
+      descricao: Maçã argentina
+      und: KG
+      data_hora: '2020-12-11T16:16:02.000Z'
+      observacoes: Bem bonita
+      foto_orig: 'https://storage.googleapis.com/lvx-inbox-delivery.appspot.com/fotos/{emitente}/produtos/000001/2020-12-03__10-58-14_orig.png'
+      foto_red: 'https://storage.googleapis.com/lvx-inbox-delivery.appspot.com/fotos/{emitente}/produtos/000001/2020-12-03__10-58-14_redm.png'
+      foto_small: 'https://storage.googleapis.com/lvx-inbox-delivery.appspot.com/fotos/{emitente}/produtos/000001/2020-12-03__10-58-14_small.png'
+      qtd: 10
+      valor_tabela: 2.8
+      valor_custo_unitario: 1.2
+      valor_custo_total: 12
+      valor_desconto_unitario: 0
+      valor_desconto_total: 0
+      valor_unitario: 4
+      valor_total: 40
+    type: object
+    properties:
+      codigo:
+        type: string
+      descricao:
+        type: string
+      und:
+        type: string
+      data_hora:
+        type: string
+      observacoes:
+        type: string
+      foto_orig:
+        type: string
+      foto_red:
+        type: string
+      foto_small:
+        type: string
+      qtd:
+        type: number
+        format: double
+      valor_tabela:
+        type: number
+        format: double
+      valor_custo_unitario:
+        type: number
+        format: double
+      valor_custo_total:
+        type: integer
+        format: int32
+      valor_desconto_unitario:
+        type: integer
+        format: int32
+      valor_desconto_total:
+        type: integer
+        format: int32
+      valor_unitario:
+        type: integer
+        format: int32
+      valor_total:
+        type: integer
+        format: int32
+    required:
+      - codigo
+      - descricao
+      - und
+      - data_hora
+      - observacoes
+      - foto_orig
+      - foto_red
+      - foto_small
+      - qtd
+      - valor_tabela
+      - valor_custo_unitario
+      - valor_custo_total
+      - valor_desconto_unitario
+      - valor_desconto_total
+      - valor_unitario
+      - valor_total
+  AtualizarPedidoRequest:
+    title: AtualizarPedidoRequest
+    example:
+      id_retaguarda: ''
+      usuario: 85b17215-32f9-4012-87a4-51bd08aa5731
+      pagamento_id: 2
+      pagamento_tipo: entrega
+      valor_total_produtos: 41.8600
+      valor_total_descontos: 0.0000
+      valor_total_pedido: 41.8600
+      valor_troco_para_quanto: 0.0000
+      data_entrega: '2021-05-13T00:00:00.000Z'
+      itens:
+        - uuid: d86f00c2-d90c-4ee9-86f3-209a50c37969
+          codigo: '000000'
+          descricao: Manga tommy
+          und: kg
+          data_hora: '2021-05-07T10:40:48.000Z'
+          observacoes: ''
+          foto_orig: ''
+          foto_red: ''
+          foto_small: ''
+          qtd: 14.0000
+          valor_tabela: 2.9900
+          valor_custo_unitario: 27.0000
+          valor_custo_total: 378.0000
+          valor_desconto_unitario: 0.0000
+          valor_desconto_total: 0.0000
+          valor_unitario: 2.9900
+          valor_total: 41.8600
+        - uuid: 268023f9-cbfa-456a-a9bb-62e12154a4d8
+          codigo: '000000'
+          descricao: Pera Argentina
+          und: kg
+          data_hora: '2021-05-07T10:40:48.000Z'
+          observacoes: ''
+          foto_orig: ''
+          foto_red: ''
+          foto_small: ''
+          qtd: 14.0000
+          valor_tabela: 2.9900
+          valor_custo_unitario: 27.0000
+          valor_custo_total: 378.0000
+          valor_desconto_unitario: 0.0000
+          valor_desconto_total: 0.0000
+          valor_unitario: 2.9900
+          valor_total: 41.8600
+    type: object
+    properties:
+      usuario:
+        type: string
+      entrega:
+        type: string
+      pagamento_tipo:
+        type: string
+      pagamento_id:
+        type: integer
+        format: int32
+      valor_total_produtos:
+        type: string
+      valor_total_descontos:
+        type: string
+      valor_total_pedido:
+        type: string
+      id_retaguarda:
+        type: string
+      data_entrega:
+        type: string
+      valor_troco_para_quanto:
+        type: string
+      itens:
+        type: array
+        items:
+          $ref: '#/definitions/ProdutoPedido'
+    required:
+      - usuario
+      - id_retaguarda
+      - entrega
+      - pagamento_tipo
+      - pagamento_id
+      - valor_total_produtos
+      - valor_total_descontos
+      - valor_total_pedido
+      - data_entrega
+      - valor_troco_para_quanto
+      - itens
+  ProdutoPedido:
+    title: ProdutoPedido
+    example:
+      uuid: 188f7264-4c3b-468a-8903-4ea9f9b1024d
+      codigo: "000000"
+      descricao: Manga tommyyy
+      und: kg
+      data_hora: '2021-05-07T10:40:48.000Z'
+      observacoes: ''
+      foto_orig: ''
+      foto_red: ''
+      foto_small: ''
+      qtd: 14.0000
+      valor_tabela: 2.9900
+      valor_custo_unitario: 27.0000
+      valor_custo_total: 378.0000
+      valor_desconto_unitario: 0.0000
+      valor_desconto_total: 0.0000
+      valor_unitario: 2.9900
+      valor_total: 41.8600
+    type: object
+    properties:
+      uuid:
+        type: string
+      codigo:
+        type: string
+      descricao:
+        type: string
+      und:
+        type: string
+      data_hora:
+        type: string
+        format: date-time
+      observacoes:
+        type: string
+      foto_orig:
+        type: string
+      foto_red:
+        type: string
+      foto_small:
+        type: string
+      qtd:
+        type: number
+        format: float
+      valor_tabela:
+        type: number
+        format: float
+      valor_custo_unitario:
+        type: number
+        format: float
+      valor_custo_total:
+        type: number
+        format: float
+      valor_desconto_unitario:
+        type: number
+        format: float
+      valor_desconto_total:
+        type: number
+        format: float
+      valor_unitario:
+        type: number
+        format: float
+      valor_total:
+        type: number
+        format: float
+    required:
+      - codigo
+      - descricao
+      - und
+      - data_hora
+      - qtd
+      - valor_tabela
+      - valor_custo_unitario
+      - valor_custo_total
+      - valor_desconto_unitario
+      - valor_desconto_total
+      - valor_unitario
+      - valor_total
+  AdicionarnotificaçãoRequest:
+    title: AdicionarnotificaçãoRequest
+    example:
+      usuario: d1ac5bcf-ac1e-46ae-babb-7544f04c0bf0
+      titulo: Teste de notificação!
+      body: Teste de notificação.
+    type: object
+    properties:
+      usuario:
+        type: string
+      titulo:
+        type: string
+      body:
+        type: string
+    required:
+      - usuario
+      - titulo
+      - body
+  
+  ObjectFormasPagamentoDisponives:
+    properties:
+      id:
+        type: integer
+        format: int32
+      descricao:
+        type: string
+      tipo:
+        type: string
+      operacao:
+        type: string
+      bandeira:
+        type: string
+      icone:
+        type: string
+      criado_em:
+        type: string
+        format: date-time
+      atualizado_em:
+        type: string
+        format: date-time
+      deletado_em:
+        type: string
+        format: date-time
+  ObjectFormasPagamentoUtilizadas:
+    properties:
+      id:
+        type: integer
+        format: int32
+      emitente:
+        type: string
+      forma:
+        type: integer
+        format: int32
+      criado_em:
+        type: string
+        format: date-time
+      atualizado_em:
+        type: string
+        format: date-time
+      deletado_em:
+        type: string
+        format: date-time
+  ResponseFormasPagamentoDisponives:
+    properties:
+      disponiveis:
+        type: array
+        items:
+          $ref: '#/definitions/ObjectFormasPagamentoDisponives'
+      utilizadas:
+        type: array
+        items:
+          $ref: '#/definitions/ObjectFormasPagamentoUtilizadas'
+          
+  ResponseAdicionarFormaPagamento:
+    properties:
+      id:
+        type: integer
+        format: int32
+      emitente:
+        type: string
+      forma:
+        type: integer
+        format: int32
+      criado_em:
+        type: string
+        format: date-time
+      atualizado_em:
+        type: string
+        format: date-time
+      deletado_em:
+        type: string
+        format: date-time
+  ResponseRemoverFormaPagamento:
+    properties:
+      id:
+        type: integer
+        format: int32
+      emitente:
+        type: string
+      forma:
+        type: integer
+        format: int32
+      criado_em:
+        type: string
+        format: date-time
+      atualizado_em:
+        type: string
+        format: date-time
+      deletado_em:
+        type: string
+        format: date-time
+tags:
+  - name: Emitentes
+  - name: Emitentes > Configurações
+  - name: Emitentes > Formas de pagamento
+  - name: Produtos
+  - name: Categorias
+  - name: Pedidos
+  - name: Pedidos > Status
+  - name: Notificações
+    description: ''
+
